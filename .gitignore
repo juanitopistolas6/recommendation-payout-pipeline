@@ -1,0 +1,29 @@
+# Environment
+.env
+
+# Data (documents + spreadsheet) — never commit
+data/*
+!data/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.sqlite3
+
+# Node
+node_modules/
+dist/
+*.local
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Demo package (contains tenants' personal data) — never commit
+data/demo/
+*.dump
+claims-demo*.zip

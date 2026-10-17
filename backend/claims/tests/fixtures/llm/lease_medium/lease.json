@@ -1,0 +1,1 @@
+[{"document_check": {"is_lease": false, "detected_type": "invoice"}, "terms": {}}, {"document_check": {"is_lease": true, "detected_type": "lease"}, "terms": {"pet_fee": "non-refundable"}}]

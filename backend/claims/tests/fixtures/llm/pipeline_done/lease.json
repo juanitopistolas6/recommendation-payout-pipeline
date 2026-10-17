@@ -1,0 +1,43 @@
+{
+  "document_check": {
+    "is_lease": true,
+    "detected_type": "lease",
+    "contains_other_documents": false,
+    "reason": "Residential lease with numbered clauses and signatures"
+  },
+  "program": {
+    "option_selected": "deposit_waiver_program",
+    "coverage_amount": 2500.0,
+    "traditional_deposit_amount": null,
+    "monthly_program_fee": 19.0,
+    "coverage_language": "Any amounts due but unpaid to Landlord will be paid up to the amount of the coverage.",
+    "section_reference": "Security Deposit Lease Addendum, p.15"
+  },
+  "monthly_rent": 1450.0,
+  "allowed_deductions": [
+    {
+      "category": "cleaning",
+      "quote": "Tenant shall pay for cleaning",
+      "section_reference": "B.6.E"
+    }
+  ],
+  "fees": [
+    {
+      "name": "Late fee",
+      "category": "late_fee",
+      "amount_type": "fixed",
+      "value": 50.0,
+      "unit": null,
+      "section_reference": "A.4"
+    }
+  ],
+  "normal_wear_and_tear_excluded": true,
+  "attorney_fees_recoverable": true,
+  "pets": {
+    "allowed": false,
+    "notes": "No pets"
+  },
+  "uncertain_selections": [],
+  "inconsistencies": [],
+  "confidence": "high"
+}

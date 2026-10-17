@@ -1,0 +1,22 @@
+{
+  "line_items": [
+    {
+      "date": "2022-03-05",
+      "description": "Carpet replacement",
+      "amount": 1775.0,
+      "category": "damages",
+      "eligible": true,
+      "eligibility_basis": "lease",
+      "lease_reference": "B.6.E",
+      "reason": "Damage beyond normal wear",
+      "source_document": "ledger.pdf"
+    }
+  ],
+  "payments_and_credits": [],
+  "printed_total": 1775.0,
+  "findings": [
+    "Ledger shows a single carpet charge"
+  ],
+  "flags": [],
+  "confidence": "high"
+}

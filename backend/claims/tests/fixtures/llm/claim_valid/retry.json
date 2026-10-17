@@ -1,0 +1,20 @@
+{
+  "line_items": [
+    {
+      "date": "2022-03-05",
+      "description": "Carpet cleaning",
+      "amount": 325.0,
+      "category": "cleaning",
+      "eligible": true,
+      "eligibility_basis": "program_default",
+      "lease_reference": null,
+      "reason": "Cleaning required at move-out",
+      "source_document": "ledger.pdf"
+    }
+  ],
+  "payments_and_credits": [],
+  "printed_total": null,
+  "findings": [],
+  "flags": [],
+  "confidence": "high"
+}

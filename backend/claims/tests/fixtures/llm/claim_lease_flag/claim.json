@@ -1,0 +1,12 @@
+{
+  "line_items": [],
+  "payments_and_credits": [],
+  "printed_total": null,
+  "findings": [
+    "Bell Lease.pdf is a residential lease agreement; no charges were extracted from it."
+  ],
+  "flags": [
+    "lease_document_included"
+  ],
+  "confidence": "medium"
+}

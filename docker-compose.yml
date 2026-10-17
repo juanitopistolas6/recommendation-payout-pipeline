@@ -1,0 +1,70 @@
+services:
+  db:
+    image: postgres:18-alpine
+    env_file: .env
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    image: corgi-take-home-backend
+    env_file: .env
+    # ASGI: necesario para el streaming SSE. --reload usa sondeo (sin watchfiles), así funciona en Windows.
+    command: sh -c "python manage.py migrate && uvicorn config.asgi:application --host 0.0.0.0 --port 8000 --reload"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./data:/data:ro
+      - ./data/_converted:/data/_converted  # única carpeta de data/ con escritura: PDFs convertidos
+      - ./data/demo:/data/demo  # paquete demo: export_demo lo escribe, import_demo lo lee
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Un solo worker: el cuello de botella es la cuota de Gemini, no la CPU (más workers = más 429).
+  # No recarga código solo: tras cambiar el pipeline, `docker compose restart worker`.
+  worker:
+    build: ./backend
+    image: corgi-take-home-backend
+    env_file: .env
+    command: python manage.py rqworker default
+    volumes:
+      - ./backend:/app
+      - ./data:/data:ro
+      - ./data/_converted:/data/_converted  # única carpeta de data/ con escritura: PDFs convertidos
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
