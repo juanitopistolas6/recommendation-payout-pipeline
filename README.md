@@ -163,6 +163,17 @@ docker compose exec backend python manage.py process_claims --ids 1 --sync --for
 
 `--force-from-step N` ignores cached results from step N on (1 classify, 2 lease, 3 claim, 4 rules).
 
+To check that everything processing needs is in place (Gemini key and mode, models and today's quota, prompts,
+claims and documents in the database, the files under `DATA_ROOT`, Redis and the worker) without spending quota:
+
+```sh
+docker compose exec backend python manage.py check_setup              # add --ids 1,10 to check only those files
+docker compose exec backend python manage.py check_setup --live       # + one real call (llm_smoke_test)
+```
+
+Each item prints `[OK]`, `[AVISO]` or `[ERROR]` with how to fix it; the command exits with an error if any item
+fails.
+
 To check the Gemini setup with a single real call:
 
 ```sh
@@ -391,6 +402,7 @@ Rate limits per model are in `GEMINI_RATE_LIMITS` in `backend/config/settings.py
 | `classify_documents`          | Classify pending documents. `--ids` / `--all`, `--no-llm`            |
 | `process_claims`              | Full pipeline. `--ids`, `--sync`, `--force-from-step`                |
 | `recompute_recommendations`   | Re-run the rules over stored extractions, no LLM. `--ids` / `--all`  |
+| `check_setup`                 | Checks everything processing needs, no LLM calls. `--ids`, `--live`  |
 | `llm_smoke_test`              | One real Gemini call to check the setup                              |
 | `evaluate`                    | AI vs. the simple rule against the human decision, in one line. `--rules-version` |
 | `relocate_converted`          | One-off: moves conversions to `_converted/<original path>.<ext>`. `--dry-run` |
